@@ -15,7 +15,7 @@ export const Signupthree = () => {
     return <button style={{backgroundColor:'transparent',border:'none'}} {...buttonProps}>Resend</button>;
   };
   const renderTime = (remainingTime) => {
-    return <span>{remainingTime} seconds remaining</span>;
+    return <span style={{fontSize:'10px'}}>{remainingTime} seconds remaining</span>;
   };
 
   console.log(OTP)
@@ -36,14 +36,14 @@ export const Signupthree = () => {
     <Stack align='center'>
 
       <Typography variant='caption' component="h2">Firstly, we need to verify your legal Id. Select which document you want to use.</Typography>
-      <Typography variant='h6' component="h2">{email.slice(0, 1)}{'*'.repeat(email.search("@") - 3)}{email.slice(email.search("@") - 1)}/{ph.slice(0, 4)}{'*'.repeat(ph.length - 6)}{ph.slice(ph.length - 2)}</Typography>
+      <Typography marginBottom={3} variant='h6' component="h2">{email.slice(0, 1)}{'*'.repeat(email.search("@") - 3)}{email.slice(email.search("@") - 1)}/{ph.slice(0, 4)}{'*'.repeat(ph.length - 6)}{ph.slice(ph.length - 2)}</Typography>
 
       <FormControl >
   
-          <Stack gap={5} justifyContent='center' direction="column" margin='auto' width={'18%'}>
+          <Stack   width='100%'  gap={5} alignItems={'center'} direction="column" margin='auto' >
       <OTPInput  value={OTP}
-      onChange={setOTP} style={{color:'silver'}} autoFocus OTPLength={4} otpType="number" disabled={false} />
-      <ResendOTP  renderButton={renderButton} renderTime={renderTime} onResendClick={() => console.log("Resend clicked")} />
+      onChange={setOTP} style={{color:'silver'}} autoFocus OTPLength={4} inputStyles={{backgroundColor:'#D3D3D3',borderRadius:'12px',padding:'10px'}} otpType="number" disabled={false} />
+      <ResendOTP style={{display:'flex',flexDirection:'column-reverse'}}  renderButton={renderButton} renderTime={renderTime} onResendClick={() => console.log("Resend clicked")} />
           </Stack>
           <Typography ref={errorIndicate} color='red' width={'69%'} align='center'></Typography>
           <Stack  justifyContent={'center'} direction='row'>

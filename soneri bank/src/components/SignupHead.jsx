@@ -167,32 +167,33 @@ else{
        Progressing   }
   
   </Grid>
-<Stack align='center'>
-<Typography  variant='h6' component='h2'>{Page}</Typography>
-</Stack>
-
-</Stack>
-<Box
+  <Box
       sx={{
+        width:'100%',
         display: 'flex',
         flexWrap: 'wrap',
         position:'absolute',
         top:142,
-        left:487,
-
+        justifyContent:'center',
+        zIndex:-1,
         
         '& > :not(style)': {
           m: 1,
           width: 250,
-          height: 130
-          ,zIndex:-1,
-          borderBottom:'none',
-          borderRadius: '150px 150px 0 0'
+          height: 130,
+          borderRadius: '150px 150px 0 0',
+  
         },
       }}
     >
       <Grid  sx={{background:'#FBBB1C',boxShadow:' 0px 58px 90px 10px #FAC32C'}} elevation={0} />
     </Box>
+<Stack align='center'>
+<Typography  variant='h6' component='h2'>{Page}</Typography>
+</Stack>
+
+</Stack>
+
 
 </>
   )
