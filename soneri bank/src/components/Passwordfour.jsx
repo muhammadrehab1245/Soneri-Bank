@@ -7,22 +7,21 @@ import Notecontext from '../context/Notecontext';
 
 export const Passwordfour = () => {
   const context=useContext(Notecontext)
-  const {PageNavigate,dataStore,data}=context
+  const {PageNavigate,dataStore,data,t}=context
   const errorIndicate = createRef();
   const [OTP, setOTP] = useState(data.otp!==undefined?data.otp:"");
   let email = 'rehab123335@gmail.com', ph = '923312643625'
   const renderButton = (buttonProps) => {
-    return <button style={{backgroundColor:'transparent',border:'none'}} {...buttonProps}>Resend</button>;
+    return <button style={{backgroundColor:'transparent',border:'none'}} {...buttonProps}>{t('resend')}</button>;
   };
   const renderTime = (remainingTime) => {
-    return <span>{remainingTime} seconds remaining</span>;
+    return <span style={{fontSize:'10px'}}>{remainingTime} {t('secrem')}</span>;
   };
 
-  console.log(OTP)
   const nextStep=()=>{
    if (OTP.length===4){
     dataStore({otp:OTP})
-  PageNavigate('/signup4')}
+  PageNavigate('/header/forgotpassword5')}
   else{
 
     errorIndicate.current.textContent='Enter Valid OTP Code'
@@ -30,12 +29,12 @@ export const Passwordfour = () => {
   }
   
   const PrevStep=()=>{
-    PageNavigate('/signup2')
+    PageNavigate('/header/forgotpassword3')
   }
   return (
     <Stack align='center'>
-
-      <Typography variant='caption' component="h2">Firstly, we need to verify your legal Id. Select which document you want to use.</Typography>
+    <Typography position={'relative'} bottom={134} color={'white'}>{t('smsotp')}</Typography>
+      <Typography variant='caption' component="h2">{t('otpdes')}</Typography>
       <Typography variant='h6' component="h2">{email.slice(0, 1)}{'*'.repeat(email.search("@") - 3)}{email.slice(email.search("@") - 1)}/{ph.slice(0, 4)}{'*'.repeat(ph.length - 6)}{ph.slice(ph.length - 2)}</Typography>
 
       <FormControl >
@@ -45,7 +44,7 @@ export const Passwordfour = () => {
       onChange={setOTP} style={{color:'silver'}} autoFocus OTPLength={4} otpType="number" disabled={false} />
       <ResendOTP  renderButton={renderButton} renderTime={renderTime} onResendClick={() => console.log("Resend clicked")} />
           </Stack>
-          <Typography ref={errorIndicate} color='red' width={'69%'} align='center'></Typography>
+          <Typography ref={errorIndicate} color='red'  width={'100%'} align='center'></Typography>
           <Stack  justifyContent={'center'} direction='row'>
       <Box    sx={{
         '& > :not(style)': { m:2,width: '2%',borderRadius:26 },

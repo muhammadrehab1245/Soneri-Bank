@@ -8,7 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import Notecontext from '../context/Notecontext';
 export const Signuptwo = () => {
   const context=useContext(Notecontext)
-const {PageNavigate,dataStore,data}=context
+const {PageNavigate,dataStore,data,t}=context
   const [type, settype] = useState(data.accounttype!==undefined?data.accounttype:'Account')
   const [value, setValue] = useState(data.accountnumber!==undefined?data.accountnumber:"")
   const errorIndicate = createRef();
@@ -20,21 +20,24 @@ const Secondvalue=(e)=>{
 const nextStep=async()=>{
   if (value.length===11){
     dataStore({accounttype:type,accountnumber:value})
-    const response = await fetch(`http://192.168.0.168:8080/iscnicandaccountNocheck/1/1`, {
-    method: "GET",
+  /*  const response = await fetch(`http://${ipaddress}:8080/iscnicandaccountNocheck/${data.idnum}/${value}`, {
+    method: "POST",
     headers: {
         "Content-Type": "application/json",
     },
-});
+    body:JSON.stringify({_id:data.idnum,accountNo:data.accountnumber})
 
+});
+console.log(typeof(data.idnum))
+console.log(value,typeof(value))
 if (response.status === 200) {
     console.log("Record found");
 } else if (response.status === 404) {
     console.log("Record not found");
 } else {
     console.log("Error: ", response.status);
-}
-  PageNavigate('/signup3')}
+}*/
+  PageNavigate('/header/signup3')}
   else{
 
     errorIndicate.current.textContent='Enter Valid Account Detail'
@@ -42,13 +45,13 @@ if (response.status === 200) {
 }
 
 const PrevStep=()=>{
-  PageNavigate('/signup1')
+  PageNavigate('/header/signup1')
 }
   return (
     <>
     <Stack align='center'>
-
-    <Typography variant='caption' component="h2">Firstly, we need to verify your legal Id. Select which document you want to use.</Typography>
+    <Typography position={'relative'} bottom={134} color={'white'}>{t('bankid')}</Typography>
+    <Typography variant='caption' component="h2">{t('veracc')}</Typography>
 
 <FormControl >
       <RadioGroup
@@ -59,7 +62,7 @@ const PrevStep=()=>{
         onChange={e=>settype(e.target.value)}
       >
 <Stack gap={5}  direction="row"  margin='auto' width={'40%'}>
-        <FormControlLabel value="Account" control={<Radio />} label="Account" />
+        <FormControlLabel value="Account" control={<Radio />} label={t('account')} />
     </Stack>
       </RadioGroup>
       <Stack    align='center' >
@@ -71,7 +74,7 @@ const PrevStep=()=>{
    
     >
       <TextField type='number' sx={{  borderLeft: '5px solid black'}}    onChange={Secondvalue}
-      value={value} id="outlined-basic" label="Please Enter 11 digit soneri account number" variant="outlined" />
+      value={value} name='accountnum' id="accountnum" label={t('enterdig')} variant="outlined" />
   
       </Box>
       </Stack>

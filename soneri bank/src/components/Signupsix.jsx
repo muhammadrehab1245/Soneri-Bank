@@ -17,7 +17,7 @@ export const Signupsix = () => {
     event.preventDefault();
   };
   const context=useContext(Notecontext)
-  const {PageNavigate,dataStore,data,resetdata}=context
+  const {PageNavigate,dataStore,data,resetdata,t}=context
 
   const initialValues={
     pin: data.pin!==undefined?data.pin:"",
@@ -31,31 +31,32 @@ const formik =useFormik({
   dataStore({password:values.pin,cPassword:values.cPin})
   console.log(data)
   resetdata()
-  PageNavigate('/signup1')
+  PageNavigate('/header/signup1')
   
 }
 })
 
 const PrevStep=()=>{
-  PageNavigate('/signup5')
+  PageNavigate('/header/signup5')
 }
 
   return (
     <>
     <Stack align='center'>
-
-    <Typography variant='caption' component="h2">Firstly, we need to verify your legal Id. Select which document you want to use.</Typography>
+    <Typography position={'relative'} bottom={134} color={'white'}>{t('credentials')}</Typography>
+    <Typography variant='caption' component="h2">{t('pindes')}</Typography>
 
 <form onSubmit={formik.handleSubmit} >
 
       <Stack  alignItems='center'  >
 
       <FormControl sx={{ m: 1, width: '48%' }} variant="outlined">
-          <InputLabel htmlFor="pin">Pin</InputLabel>
+
           <OutlinedInput
           sx={{  borderLeft: '5px solid black'}}
             id="pin"
             name='pin'
+            placeholder={t('pin')}
             onBlur={formik.handleBlur}
             value={formik.values.pin}
             onChange={formik.handleChange}
@@ -73,18 +74,20 @@ const PrevStep=()=>{
                 </IconButton>
               </InputAdornment>
             }
-            label="Pin"
+     
           />
             {formik.errors.pin && formik.touched.pin ? (
                       <Typography color='orange'  textAlign={'center'} fontSize='xs'>{formik.errors.pin}</Typography>
                     ) : null}
         </FormControl>
-      <FormControl sx={{ m: 1, width: '48%', }} variant="outlined">
-          <InputLabel htmlFor="Cpin">Confirm pin</InputLabel>
+      <FormControl sx={{ m: 1, width: '48%' }} variant="outlined">
+          <InputLabel htmlFor="Cpin"></InputLabel>
           <OutlinedInput
+                
           sx={{  borderLeft: '5px solid black'}}
           id="Cpin"
           name='cPin'
+          placeholder={t('cpin')}
             type={showConfirmPin ? 'text' : 'password'}
             onBlur={formik.handleBlur}
             value={formik.values.cPin}
@@ -101,7 +104,7 @@ const PrevStep=()=>{
                 </IconButton>
               </InputAdornment>
             }
-            label="Confirm pin"
+    
           />
                {formik.errors.cPin && formik.touched.cPin ? (
                       <Typography color='orange'  textAlign={'center'} fontSize='xs'>{formik.errors.cPin}</Typography>

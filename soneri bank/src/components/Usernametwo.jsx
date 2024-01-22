@@ -7,28 +7,34 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import Notecontext from '../context/Notecontext';
 export const Usernametwo = () => {
-  const [type, settype] = useState('Account')
-  const [value, setValue] = useState("")
   const errorIndicate = createRef();
   const context=useContext(Notecontext)
-const {PageNavigate}=context
+const {PageNavigate,data,dataStore,t}=context
+const [type, settype] = useState(data.accounttype!==undefined?data.accounttype:'Account')
+const [value, setValue] = useState(data.accountnumber!==undefined?data.accountnumber:"")
 
 const Secondvalue=(e)=>{
   e.target.value.length<=11?setValue(e.target.value):setValue(value)
 }
 
 const nextStep=()=>{
-  value.length===11?PageNavigate('/signup3'):errorIndicate.current.textContent='Enter Valid Account Detail'
+  if (value.length===11){
+    dataStore({accounttype:type,accountnumber:value})
+  PageNavigate('/header/forgotusername3')}
+  else{
+
+    errorIndicate.current.textContent='Enter Valid Account Detail'
+  } 
 }
 
 const PrevStep=()=>{
-  PageNavigate('/signup1')
+  PageNavigate('/header/forgotusername1')
 }
   return (
     <>
     <Stack align='center'>
-
-    <Typography variant='caption' component="h2">Firstly, we need to verify your legal Id. Select which document you want to use.</Typography>
+    <Typography position={'relative'} bottom={134} color={'white'}>{t('bankid')}</Typography>
+    <Typography variant='caption' component="h2">{t('veracc')}</Typography>
 
 <FormControl >
       <RadioGroup
@@ -39,7 +45,7 @@ const PrevStep=()=>{
         onChange={e=>settype(e.target.value)}
       >
 <Stack gap={5}  direction="row"  margin='auto' width={'40%'}>
-        <FormControlLabel value="Account" control={<Radio />} label="Account" />
+        <FormControlLabel value="Account" control={<Radio />} label={t('account')} />
     </Stack>
       </RadioGroup>
       <Stack    align='center' >
@@ -51,7 +57,7 @@ const PrevStep=()=>{
    
     >
       <TextField type='number' sx={{  borderLeft: '5px solid black'}}    onChange={Secondvalue}
-      value={value} id="outlined-basic" label="Please Enter 11 digit soneri account number" variant="outlined" />
+      value={value} id="outlined-basic" label={t('enterdig')} variant="outlined" />
   
       </Box>
       </Stack>

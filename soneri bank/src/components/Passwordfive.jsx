@@ -17,7 +17,7 @@ export const Passwordfive = () => {
     event.preventDefault();
   };
   const context=useContext(Notecontext)
-  const {PageNavigate,dataStore,data}=context
+  const {PageNavigate,dataStore,data,t}=context
   const initialValues={
       password: data.password!==undefined?data.password:"",
       cPassword: data.cPassword!==undefined?data.cPassword:""
@@ -28,27 +28,29 @@ export const Passwordfive = () => {
     validationSchema: PasswordSchema,
    onSubmit: async (values) => {
     dataStore({password:values.password,cPassword:values.cPassword})
-    PageNavigate('/signup6')
+    PageNavigate('/header/forgotpassword1')
   }
   })
   const PrevStep=()=>{
-    PageNavigate('/signup4')
+    PageNavigate('/header/forgotpassword4')
   }
   return (
     <>
     <Stack align='center'>
 
-    <Typography variant='caption' component="h2">Firstly, we need to verify your legal Id. Select which document you want to use.</Typography>
+    <Typography position={'relative'} bottom={134} color={'white'}>{t('credentials')}</Typography>
+    <Typography variant='caption' component="h2">{t('passstr')}</Typography>
 
 <form onSubmit={formik.handleSubmit}>
 
       <Stack  alignItems='center'  >
 
       <FormControl sx={{ m: 1, width: '48%' }} variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+   
           <OutlinedInput
           name='password'
           id='password'
+          placeholder={t('password')}
           sx={{  borderLeft: '5px solid black'}}
           onChange={formik.handleChange}
                onBlur={formik.handleBlur}
@@ -66,18 +68,19 @@ export const Passwordfive = () => {
                 </IconButton>
               </InputAdornment>
             }
-            label="Password"
+
           />
                      {formik.errors.password && formik.touched.password ? (
                       <Typography color='orange'  textAlign={'center'} fontSize='xs'>{formik.errors.password}</Typography>
                     ) : null}
         </FormControl>
       <FormControl sx={{ m: 1, width: '48%' }} variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">Confirm password</InputLabel>
+      
           <OutlinedInput
           sx={{  borderLeft: '5px solid black'}}
           name='cPassword'
           id='cPassword'
+          placeholder={t('cpass')}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.cPassword}
@@ -94,7 +97,6 @@ export const Passwordfive = () => {
                 </IconButton>
               </InputAdornment>
             }
-            label="Confirm password"
           />
            {formik.errors.cPassword && formik.touched.cPassword ? (
                       <Typography color='orange'  textAlign={'center'} fontSize='xs'>{formik.errors.cPassword}</Typography>

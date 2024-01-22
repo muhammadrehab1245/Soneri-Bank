@@ -1,13 +1,10 @@
 import * as Yup from "yup";
 export const UsernameSchema = Yup.object().shape({
-    username: Yup.string()
-      .min(6, 'Too Short!')
-      .max(15, 'Too Long!')
-      .required('Required'),
-    cUsername: Yup.string()
-      .min(6, 'Too Short!')
-      .max(15, 'Too Long!').oneOf([Yup.ref('username'), null], 'Confirm username correctly')
-      .required('Required'),
+    username: Yup.string().email('Invalid email').required('Required'),
+    cUsername: Yup.string().oneOf([Yup.ref('username'), null], 'Confirm username correctly').required('Required'),
+  });
+export const UsernameSchemaforpassword = Yup.object().shape({
+    username: Yup.string().email('Invalid email').required('Required'),
   });
 
   export const PasswordSchema = Yup.object().shape({

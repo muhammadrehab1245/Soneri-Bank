@@ -9,7 +9,7 @@ import Notecontext from '../context/Notecontext';
 
 export const Signupone = () => {
   const context=useContext(Notecontext)
-  const {PageNavigate,dataStore,data}=context
+  const {PageNavigate,dataStore,data,t,documentlang}=context
   const [document, setdocument] = useState(data.idtype!==undefined?data.idtype:'CNIC/SCNIC')
   const [value, setValue] = useState(data.idnum!==undefined?data.idnum:"")
   const errorIndicate = createRef();
@@ -24,22 +24,20 @@ export const Signupone = () => {
   const nextStep=()=>{
     if (value.length===13) {
       dataStore({idnum:value,idtype:document})
-      PageNavigate('/signup2')
+      PageNavigate('/header/signup2')
     }
     else{
       errorIndicate.current.textContent='Enter Valid CNIC Detail'
     }
   }
 
-  const PrevStep=()=>{
-    PageNavigate('/signup1')
-  }
 
   return (
     <>
     <Stack align='center'>
+    <Typography position={'relative'} bottom={134} color={'white'}>{t('legalid')}</Typography>
 
-    <Typography variant='caption' component="h2">Firstly, we need to verify your legal Id. Select which document you want to use.</Typography>
+    <Typography variant='caption' component="h2">{t('verid')}</Typography>
 
 <FormControl >
       <RadioGroup
@@ -50,10 +48,10 @@ export const Signupone = () => {
         value={document}
       >
 <Stack gap={5} justifyContent='center'  direction="row"  margin='auto' width={'80%'}>
-        <FormControlLabel value="CNIC/SCNIC" control={<Radio />} label="CNIC/SCNIC" />
-<FormControlLabel value="POC" control={<Radio />} label="POC" />
-<FormControlLabel value="S/NICPO" control={<Radio />} label="S/NICPO" />
-<FormControlLabel value="PASSPORT" control={<Radio />} label="PASSPORT" />
+        <FormControlLabel value="CNIC/SCNIC" control={<Radio />} label={t('cnic')} />
+<FormControlLabel value="POC" control={<Radio />} label={t('poc')} />
+<FormControlLabel value="S/NICPO" control={<Radio />} label={t('nicpo')}/>
+<FormControlLabel value="PASSPORT" control={<Radio />} label={t('passport')} />
 <Stack position='relative' right={22} top={7} >
 <FaArrowRight color='grey' size={20} />
 </Stack>
@@ -67,9 +65,9 @@ export const Signupone = () => {
         '& > :not(style)': { m:2,width: '57%' },
       }}
     >
-      <TextField  type='number'       onChange={(e) => Firstvalue(e)}
+      <TextField  type='number'   onChange={(e) => Firstvalue(e)}
        value={value} 
-    sx={{  borderLeft: '5px solid black'}} id="outlined-basic" label={`${document} Number`} variant="outlined" />
+    sx={{  borderLeft: '5px solid black'}} name='idnum' id="idnum" placeholder={`${documentlang[document]} ${t('number')}`} variant="outlined" />
       </Box>
   <Typography ref={errorIndicate} color='red' width={'58%'} align='center'></Typography>
 

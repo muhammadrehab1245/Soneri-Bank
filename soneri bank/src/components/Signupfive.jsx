@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { useFormik } from "formik";
-import { Box, Button,  IconButton, InputAdornment, InputLabel, OutlinedInput, Stack, Typography } from '@mui/material';
+import { Box, Button,  IconButton, InputAdornment, InputLabel, Link, OutlinedInput, Stack, Typography } from '@mui/material';
 import { FaArrowLeft ,FaArrowRight } from "react-icons/fa6";
 import FormControl from '@mui/material/FormControl';
 import { MdOutlineVisibility,MdOutlineVisibilityOff  } from "react-icons/md";
@@ -17,7 +17,7 @@ export const Signupfive = () => {
     event.preventDefault();
   };
   const context=useContext(Notecontext)
-  const {PageNavigate,dataStore,data}=context
+  const {PageNavigate,dataStore,data,t}=context
   const initialValues={
       password: data.password!==undefined?data.password:"",
       cPassword: data.cPassword!==undefined?data.cPassword:""
@@ -28,24 +28,23 @@ export const Signupfive = () => {
     validationSchema: PasswordSchema,
    onSubmit: async (values) => {
     dataStore({password:values.password,cPassword:values.cPassword})
-    PageNavigate('/signup6')
+    PageNavigate('/header/signup6')
   }
   })
   const PrevStep=()=>{
-    PageNavigate('/signup4')
+    PageNavigate('/header/signup4')
   }
   return (
     <>
     <Stack align='center'>
-
-    <Typography variant='caption' component="h2">Firstly, we need to verify your legal Id. Select which document you want to use.</Typography>
+    <Typography position={'relative'} bottom={134} color={'white'}>{t('credentials')}</Typography>
+    <Typography variant='caption' component="h2">{t('passstr')}</Typography>
 
 <form onSubmit={formik.handleSubmit}>
 
       <Stack  alignItems='center'  >
 
       <FormControl sx={{ m: 1, width: '48%' }} variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
           <OutlinedInput
           name='password'
           id='password'
@@ -53,6 +52,7 @@ export const Signupfive = () => {
           onChange={formik.handleChange}
                onBlur={formik.handleBlur}
                value={formik.values.password}
+               placeholder={t('password')}
             type={showPassword ? 'text' : 'password'}
             endAdornment={
               <InputAdornment position="end">
@@ -66,19 +66,21 @@ export const Signupfive = () => {
                 </IconButton>
               </InputAdornment>
             }
-            label="Password"
+    
           />
                      {formik.errors.password && formik.touched.password ? (
                       <Typography color='orange'  textAlign={'center'} fontSize='xs'>{formik.errors.password}</Typography>
                     ) : null}
         </FormControl>
       <FormControl sx={{ m: 1, width: '48%' }} variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">Confirm password</InputLabel>
+  
           <OutlinedInput
           sx={{  borderLeft: '5px solid black'}}
           name='cPassword'
           id='cPassword'
+          
           onChange={formik.handleChange}
+          placeholder={t('cpass')}
           onBlur={formik.handleBlur}
           value={formik.values.cPassword}
             type={showConfirmPassword ? 'text' : 'password'}
@@ -94,7 +96,7 @@ export const Signupfive = () => {
                 </IconButton>
               </InputAdornment>
             }
-            label="Confirm password"
+
           />
            {formik.errors.cPassword && formik.touched.cPassword ? (
                       <Typography color='orange'  textAlign={'center'} fontSize='xs'>{formik.errors.cPassword}</Typography>
@@ -108,7 +110,9 @@ export const Signupfive = () => {
       }}> 
     <Button  onClick={PrevStep}  sx={{ backgroundColor: "#052CAC", color: "white", width: 150,'&:hover': {
     backgroundColor: '#052CAC',
-  }, }} margin='auto'  variant="contained"><FaArrowLeft size={17}/></Button>
+  }, }} margin='auto'  variant="contained"><FaArrowLeft size={17}/>
+
+  </Button>
       </Box>
       <Box    sx={{
         '& > :not(style)': { m:2,width: '2%',borderRadius:26 },
